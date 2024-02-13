@@ -1,4 +1,20 @@
-# pds
+# Delivering Locally Sourced Nutritious Food to Indian Households
+
+## Replication instructions
+**Rough outline**
+1. Dependencies + environment
+2. Preference Clustering
+3. Basket Design
+4. Distribution
+
+## Data explanation
+1. Consumption
+2. Travel Times
+3. Production
+
+## References
+
+## License
 
 ## TODO:
 - /data
