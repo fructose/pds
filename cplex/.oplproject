@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ASCII"?><project>
+    	
+    <version>1.0</version>
+    	
+    <configs>
+        		
+        <config default="true" name="basket_design" category="opl">
+            			
+            <ref name="basket_design/basket.mod" type="model">
+			</ref>
+            			
+            <ref name="basket_design/basket.dat" type="data">
+			</ref>
+            		
+        </config>
+        		
+        <config default="false" name="distribution" category="opl">
+            			
+            <ref name="distribution/distribution.dat" type="data">
+			</ref>
+            			
+            <ref name="distribution/disrtibution.mod" type="model">
+			</ref>
+            		
+        </config>
+        	
+    </configs>
+    	
+
+</project>

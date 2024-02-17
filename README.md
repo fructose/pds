@@ -1,7 +1,7 @@
 # Delivering Locally Sourced Nutritious Food to Indian Households
-
+___
 ## Replication instructions
-**Rough outline**
+*Rough outline*
 1. Dependencies + environment
     1. Python packages: sklearn, matplotlib, numpy, pandas
     2. CPLEX runtimes: Basket Design, Distribution
