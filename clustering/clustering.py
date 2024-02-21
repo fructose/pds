@@ -6,10 +6,10 @@ import pandas as pd
 from sklearn.cluster import KMeans
 
 # Load the data from the CSV file
-data = pd.read_csv('./data/consumption.csv')
+data = pd.read_csv('./consumption_abs.csv')
 
 # Weight latitude and longitude
-GEO_WEIGHT = .1 # Higher value prioritizes geographic proximity over taste similarity
+GEO_WEIGHT = .5 # Higher value prioritizes geographic proximity over taste similarity
 
 # Weight Latitude and Longitude
 data['Latitude'] *= GEO_WEIGHT
