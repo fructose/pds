@@ -33,22 +33,3 @@ plt.xlabel("Longitude",size=14)
 plt.ylabel("Latitude",size=14)
 plt.axis("equal")
 plt.savefig('plot.png')
-
-
-
-# # Write the clusters to new csv file
-# with open('../data/consumption.csv', 'r') as csv_file:
-#     reader = csv.reader(csv_file)
-#     rows = list(reader)
-
-# # add the "cluster" header to the last column
-# rows[0].append("cluster")
-
-# # add the "y" values to the last column of each row
-# for i in range(1, len(rows)):
-#     rows[i].append(y[i-1])
-
-# # open the output CSV file and write the rows
-# with open('consumption_with_clusters.csv', 'w', newline='') as csv_file:
-#     writer = csv.writer(csv_file)
-#     writer.writerows(rows)
