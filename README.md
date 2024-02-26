@@ -2,7 +2,11 @@
 ___
 
 # NOTE TO SELF:
-## tell sanchita about using softmax
+- tell sanchita about using softmax
+- ask about rice + wheat. Include? Not include?
+- revisit the terminology "bin-packing". Is this really a bin-packing problem? The baskets are designed with
+continuous (not discrete) amounts of each crop. 
+
 
 ## Replication instructions
 *Rough outline*

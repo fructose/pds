@@ -5,6 +5,8 @@ import pandas as pd
 
 from sklearn.cluster import KMeans
 
+CPLEX_DATA_PATH = "../cplex/data"
+
 # Load consumption data
 data = pd.read_csv('../data/consumption.csv')
 
@@ -14,21 +16,25 @@ data[['Latitude', 'Longitude']] *= GEO_WEIGHT
 
 # Perform K-means clustering on districts by past consumption and geography
 kmeans = KMeans(n_clusters=6,n_init=30)
-y = kmeans.fit_predict(data.drop(columns=['District', 'Median Income']))
+y = kmeans.fit_predict(data.drop(columns=['District', 'Median Income', 'Households']))
 data['Cluster'] = y
 
 # Save cluster assignments
-data[['District', 'Cluster']].to_csv('clusters.csv', index=False)
+data[['District', 'Households', 'Cluster']].to_csv(CPLEX_DATA_PATH + '/clusters.csv', index=False)
 
 #########################
 # Convert cluster consumption into preferences
 #########################
 
+# Find total population per cluster
+households = data.groupby('Cluster')['Households'].sum()
+
 # Split dataframe by crop type (pulse or grain)
 grains = ['jowar','bajra','barley','maize','small millets','ragi']
-pulses = ['arhar','moong','masur','urd','peas','khesari','gram products','besan']
-data_pulses = data.drop(columns=grains+['Median Income', 'Latitude', 'Longitude'])
-data_grains = data.drop(columns=pulses+['Median Income', 'Latitude', 'Longitude'])
+pulses = ['arhar','moong','masur','urd','peas','khesari','gram products','besan','other pulse products','other pulses']
+
+data_pulses = data.drop(columns=grains+['Median Income', 'Latitude', 'Longitude', 'Households'])
+data_grains = data.drop(columns=pulses+['Median Income', 'Latitude', 'Longitude', 'Households'])
 
 # Group by cluster and calculate median for each food item
 pulses_summary = data_pulses.groupby('Cluster').median()
@@ -44,7 +50,11 @@ grains_softmax = grains_summary.apply(softmax, axis=1)
 
 # Combine pulse and grain dataframes and save to csv 
 combined = pd.concat([grains_softmax, pulses_softmax], axis=1)
-combined.to_csv("cluster_preferences.csv")
+combined.insert(0, 'Households', households)
+
+print(combined.head())
+
+combined.to_csv(CPLEX_DATA_PATH + "/cluster_preferences.csv")
 
 # Create cluster map plot
 plt.figure(figsize=(6, 12))
