@@ -52,8 +52,6 @@ grains_softmax = grains_summary.apply(softmax, axis=1)
 combined = pd.concat([grains_softmax, pulses_softmax], axis=1)
 combined.insert(0, 'Households', households)
 
-print(combined.head())
-
 combined.to_csv(CPLEX_DATA_PATH + "/cluster_preferences.csv")
 
 # Create cluster map plot
@@ -68,7 +66,7 @@ plt.axis("equal")
 plt.savefig('cluster_map.png')
 
 # Create crop preferences plot
-combined.plot(kind='bar', figsize=(20,10))
+combined.drop(columns='Households').plot(kind='bar', figsize=(20,10))
 plt.title('Relative crop preferences by cluster')
 plt.ylabel('Preference')
 plt.xlabel('Cluster')
