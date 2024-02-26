@@ -4,7 +4,9 @@
  * Creation Date: Oct 2, 2023 at 2:19:14 PM
  *********************************************/
 
-SheetConnection sheet("C:/Users/reube/Desktop/pds/2011.xlsx");
+SheetConnection sheet("../data/2011.xlsx");
+
+SheetConnection demand("./demand.csv");
 
 // State names
 states from SheetRead(sheet, "'L_kj'!A2:A4");
