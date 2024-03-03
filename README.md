@@ -8,6 +8,19 @@ ___
 continuous (not discrete) amounts of each crop. 
 
 
+# for sanchita
+- Figure out units for production file (same as consumption?)
+- Per household minimum (pulse vs millet)
+- Check replicability + correctness of ode (after it's finished)
+
+# for reuben
+- Make algebraic forulation of both problems (see if they agree with each other)
+- Add legend to cluster map (in general make it readable)
+- Seed clustering so it's reproducible
+- Get everything ready for the big model
+
+
+
 ## Replication instructions
 *Rough outline*
 1. Dependencies + environment
