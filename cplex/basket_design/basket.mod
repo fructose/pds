@@ -5,7 +5,7 @@
  *********************************************/
 range Clusters = 0..5;
 range Crops = 1..16;
-range Grains = 1..6;
+range millets = 1..6;
 range Pulses = 7..16;
 range Districts = 1..625;
 
@@ -21,11 +21,14 @@ int households_district[Districts] = ... ;
 
 int clusters_district[Districts] = ... ;
 
+string cereals_district[Districts] = ... ;
+
 // Toy data- will discuss.
 float available[Crops] = [3000,3000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000];
 
-float min_grain = .00005 ; // Per household
+float min_millet = .00005 ; // Per household
 float min_pulse = .00003 ; // Per household
+float min_cereal = .0001 ; // Per household
 
 // Decision variable
 dvar float+ basket[Crops][Clusters];
@@ -37,9 +40,9 @@ maximize utility ;
 
 subject to {
   
-  // Per-household grain and pulse requirements
+  // Per-household millet and pulse requirements
   forall ( cluster in Clusters ) {
-    ct1: ( sum ( grain in Grains ) basket[grain][cluster] ) == min_grain * households[cluster];
+    ct1: ( sum ( millet in millets ) basket[millet][cluster] ) == min_millet * households[cluster];
     ct2: ( sum ( puls in Pulses) basket[puls][cluster] ) == min_pulse * households[cluster];
   }
   
@@ -53,8 +56,8 @@ subject to {
 // After solving the model, write demand by district to a csv file:
 
 execute {
-  var f = new IloOplOutputFile("../distribution/demand.csv");
-  var header = "district"; // Start building the header string
+  var f = new IloOplOutputFile("../data/demand.csv");
+  var header = "district,Rice,Wheat"; // Start building the header string
   
   for(var c in Crops) {
     header += "," + crops[c]; // Append each crop name to the header
@@ -67,6 +70,20 @@ execute {
   for(var d in Districts) {
     var districtName = districts[d];
     var demandLine = districtName; // Start line with district name
+    
+    // Calculate Cereal
+    var rice_demand = 0;
+    var wheat_demand = 0;
+    if(cereals_district[d] == "Wheat") {
+      wheat_demand = min_cereal * households_district[d];
+    } else if(cereals_district[d] == "Rice") {
+      rice_demand = min_cereal * households_district[d];
+    } else {
+        wheat_demand = min_cereal * households_district[d] / 2;
+        rice_demand = min_cereal * households_district[d] / 2;
+    }
+    demandLine += "," + rice_demand + "," + wheat_demand;
+	    
     
     for(var c in Crops) {
       var totalCropDemandInDistrict = 0;
